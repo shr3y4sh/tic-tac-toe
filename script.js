@@ -1,15 +1,25 @@
 function makePlayer(name, tac) {
   // Player factory function, returns name and tacChoice.
   // Name is not required for now, but we will see what happens
-  const tacChoice = () => tac;
+  const tac = () => tac;
+
+  let turn = false;
+
+  const isPlayerTurn = () => turn;
+
+  const takeTurn = function () {
+    turn = true;
+  }
 
   return {
     name,
-    tacChoice,
+    tac,
+    turn,
   };
 }
 
 function GameBoard() {
+  // Grid will have addresses 1-9
   let grid = [];
 
   // Grid of 3x3 with names 0-2
@@ -27,22 +37,45 @@ function GameBoard() {
     }
   }
 
-  const inputFunc = function (player) {
-    const input = player.tacChoice();
-  };
+  const getEmptyCells = function (player) {
+    console.log("Empty Choices: ");
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (grid[i][j] === 0) {
+          console.log(`A ${i} ${j}`)
+        }
+      }
+    }
+  }
+
+  const updateBoard = function (entry) {
+
+    
+
+    
+  }
+
+
 
   return {
-    grid,
+
+
   };
 }
 
 function Controller(board, player1, player2) {
 
-  const takeYourTurn = function (player) {
-    player;
-  };
+  const player = function (player1, player2) {
 
-  const gridUpdate = function () {};
+    if (player1.tac() === "X") return player1;
+    
+    if (player2.tac() === "X") return player2;
+  }
+
+  const choice = 5; // making 5 for now, will input through UI
+
+
+  const gridUpdate = function (choice) {};
 }
 
 const start = (function () {
