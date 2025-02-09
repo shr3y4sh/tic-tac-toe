@@ -9,10 +9,9 @@ function makePlayer(name, tac) {
   };
 }
 
-function GameBoard(player1, player2) {
-  const grid = [];
-  const row = 3;
-  const col = 3;
+function GameBoard() {
+  let grid = [];
+
   // Grid of 3x3 with names 0-2
   // grid[row][col]
 
@@ -21,23 +20,37 @@ function GameBoard(player1, player2) {
     O: "O",
   };
 
-  for (let i = 0; i < row; i++) {
+  for (let i = 0; i < 3; i++) {
     grid[i] = [];
-    for (let j = 0; j < col; j++) {
+    for (let j = 0; j < 3; j++) {
       grid[i].push(0);
     }
   }
+
+  const inputFunc = function (player) {
+    const input = player.tacChoice();
+  };
+
+  return {
+    grid,
+  };
 }
 
-function Controller(grid, playerX, playerY) {
-  const gridUpdate = function () {};
+function Controller(board, player1, player2) {
 
-  const playerTurn = function () {};
+  const takeYourTurn = function (player) {
+    player;
+  };
+
+  const gridUpdate = function () {};
 }
 
 const start = (function () {
-  const playerX = makePlayer("Shreyash", "X");
-  const playerY = makePlayer("Ishank", "O");
+  const player1 = makePlayer("Shreyash", "X");
+  const player2 = makePlayer("Ishank", "O");
 
-  const board = GameBoard(playerX, playerY);
+  const board = GameBoard();
+
+
+  const gamePlay = Controller(board, player1, player2);
 })();
