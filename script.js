@@ -1,7 +1,7 @@
 function makePlayer(name, tac) {
   // Player factory function, returns name and tacChoice.
   // Name is not required for now, but we will see what happens
-  const tac = () => tac;
+  const getTac = () => tac;
 
   let turn = false;
 
@@ -9,12 +9,13 @@ function makePlayer(name, tac) {
 
   const takeTurn = function () {
     turn = true;
-  }
+  };
 
   return {
     name,
-    tac,
-    turn,
+    getTac,
+    isPlayerTurn,
+    takeTurn,
   };
 }
 
@@ -25,11 +26,6 @@ function GameBoard() {
   // Grid of 3x3 with names 0-2
   // grid[row][col]
 
-  const tac = {
-    X: "X",
-    O: "O",
-  };
-
   for (let i = 0; i < 3; i++) {
     grid[i] = [];
     for (let j = 0; j < 3; j++) {
@@ -37,45 +33,46 @@ function GameBoard() {
     }
   }
 
-  const getEmptyCells = function (player) {
-    console.log("Empty Choices: ");
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        if (grid[i][j] === 0) {
-          console.log(`A ${i} ${j}`)
-        }
-      }
-    }
-  }
+  // An addressMap function to return the index
+  // of the grid for number entered
 
-  const updateBoard = function (entry) {
-
-    
-
-    
-  }
-
-
-
-  return {
-
-
-  };
+  return grid;
 }
 
 function Controller(board, player1, player2) {
-
-  const player = function (player1, player2) {
-
+  // 1. Choose the player for their turn;
+  const player = (function (player1, player2) {
     if (player1.tac() === "X") return player1;
-    
-    if (player2.tac() === "X") return player2;
-  }
 
+    if (player2.tac() === "X") return player2;
+  })(player1, player2);
+
+  const tac = player.getTac();
+
+  // 2. Make a numeric choice
   const choice = 5; // making 5 for now, will input through UI
 
+  // 3. Return the index based on choice
+  const addressMap = (function (number) {
+    let count = 0;
 
-  const gridUpdate = function (choice) {};
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        count++;
+        if (count === number) {
+          return new Array([i, j]);
+        }
+      }
+    }
+  })(choice);
+
+  // 4. Update grid entry
+  (function (entry, playerTac, grid) {
+    let i = entry[0];
+    let j = entry[1];
+
+    grid[i][j] = playerTac;
+  })(choice, tac, board);
 }
 
 const start = (function () {
@@ -83,7 +80,6 @@ const start = (function () {
   const player2 = makePlayer("Ishank", "O");
 
   const board = GameBoard();
-
 
   const gamePlay = Controller(board, player1, player2);
 })();
