@@ -136,7 +136,9 @@ X wins.
 
 10. X is computer for this iteration so he always chooses the center cell for X.
 
-11. 
+11. Make an appropriate address to grid map.
+
+12. When choice is made in the form of 1-9, addressMap return the grid coordinates, which will then be updated using the Tac choice.
 
 
 
