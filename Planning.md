@@ -105,3 +105,55 @@ X wins.
 
 * So how will we proceed?
 
+### MakePlayer
+
+
+### GameBoard
+
+
+### Controller
+
+
+#### Start =>
+
+1. make two players 
+
+2. Assign X or O
+
+3. make a Board, with empty grid
+
+4. Give the controller the empty board and two players
+
+5. Now controller handles the game. 
+
+6. Everything (all actions) happens inside the controller 
+
+7. Controller assigns turn to a player. // Make a method for this
+
+8. Player in turn makes a choice to put their chosen tac into cell.
+
+9. First turn, 9 options.
+
+10. X is computer for this iteration so he always chooses the center cell for X.
+
+11. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
