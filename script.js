@@ -1,8 +1,3 @@
-
-const logging = (input) => {
-  console.log(input);
-}
-
 function makePlayer(name, tac) {
   const getTac = () => tac;
 
@@ -12,6 +7,8 @@ function makePlayer(name, tac) {
 
   const takeTurn = function () {
     turn = true;
+    const cellChoice = 8;
+    return cellChoice;
   };
 
   return {
@@ -25,7 +22,6 @@ function makePlayer(name, tac) {
 function GameBoard() {
   let grid = [];
 
-
   for (let i = 0; i < 3; i++) {
     grid[i] = [];
     for (let j = 0; j < 3; j++) {
@@ -33,44 +29,70 @@ function GameBoard() {
     }
   }
 
-
   return grid;
 }
 
-function Controller(board, player1, player2, turnNumber) {
-  const player = (function (p1, p2, turn) {
+function Controller() {
+  /**
+   * This is the game master of the game, every action will be done by this object.
+   * It assigns turn to the correct player, find cell location based on the choice made by the player,
+   * It updates the game board accordingly.
+   */
+  // const setBoard = function () {};
+
+  const assignTurn = (p1, p2, turn) => {
     return turn % 2 === 0 ? p2 : p1;
-  })(player1, player2, turnNumber);
+  };
 
-  const tac = player.getTac();
-
-  const choice = 5; // making 5 for now, will input through UI
-  player.takeTurn();
-  const addressMap = (function (number) {
+  const cellLocation = function (number) {
     let count = 0;
 
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         count++;
         if (count === number) {
-          // console.log(count);
           return [i, j];
         }
       }
     }
-  })(choice);
-  (function (entry, playerTac, grid) {
+  };
+
+  const updateBoard = function (grid, tac, entry) {
     let i = entry[0];
     let j = entry[1];
-    grid[i][j] = playerTac;
-  })(addressMap, tac, board);
+    grid[i][j] = tac;
+    return grid;
+  };
 
+  return {
+    assignTurn,
+    cellLocation,
+    updateBoard,
+  };
 }
 
-const start = (function () {
+function nextTurn(master, board, player1, player2, round) {
+  const currentPlayer = master.assignTurn(player1, player2, round);
+  const tac = currentPlayer.getTac();
+  const choice = currentPlayer.takeTurn();
+
+  const entry = master.cellLocation(choice);
+  board = master.updateBoard(board, tac, entry);
+}
+
+const startGame = function () {
+  /**
+   * Using IIFE to start the game. Next turns will have their own functions.
+   */
+  let board = GameBoard();
+  console.log(board);
   const player1 = makePlayer("Shreyash", "X");
   const player2 = makePlayer("Ishank", "O");
-  const board = GameBoard();
-  const gamePlay = Controller(board, player1, player2, 1);
-})();
+  const master = Controller();
+
+  const round = 1;
+  nextTurn(master, board, player1, player2, round);
+  // logging(board);
+};
+
 
