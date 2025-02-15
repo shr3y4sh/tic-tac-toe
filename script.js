@@ -1,14 +1,28 @@
+const startGame = (function () {
+  /**
+   * Using IIFE to start the game. Next turns will have their own functions.
+   */
+  let board = GameBoard();
+  console.log(board);
+  const player1 = makePlayer("Shreyash", "X");
+  const player2 = makePlayer("Ishank", "O");
+  const master = Controller();
+
+  const round = 1;
+  nextTurn(master, board, player1, player2, round);
+})();
+
 function makePlayer(name, tac) {
-  // Player factory function, returns name and tacChoice.
-  // Name is not required for now, but we will see what happens
   const getTac = () => tac;
 
   let turn = false;
 
   const isPlayerTurn = () => turn;
 
-  const takeTurn = function () {
+  const takeTurn = function (choice) {
     turn = true;
+    const cellChoice = choice;
+    return cellChoice;
   };
 
   return {
@@ -20,11 +34,7 @@ function makePlayer(name, tac) {
 }
 
 function GameBoard() {
-  // Grid will have addresses 1-9
   let grid = [];
-
-  // Grid of 3x3 with names 0-2
-  // grid[row][col]
 
   for (let i = 0; i < 3; i++) {
     grid[i] = [];
@@ -33,53 +43,64 @@ function GameBoard() {
     }
   }
 
-  // An addressMap function to return the index
-  // of the grid for number entered
-
   return grid;
 }
 
-function Controller(board, player1, player2) {
-  // 1. Choose the player for their turn;
-  const player = (function (player1, player2) {
-    if (player1.tac() === "X") return player1;
+function Controller() {
+  /**
+   * This is the game master of the game, every action will be done by this object.
+   * It assigns turn to the correct player, find cell location based on the choice made by the player,
+   * It updates the game board accordingly.
+   */
 
-    if (player2.tac() === "X") return player2;
-  })(player1, player2);
+  const assignTurn = (p1, p2, turn) => {
+    return turn % 2 === 0 ? p2 : p1;
+  };
 
-  const tac = player.getTac();
-
-  // 2. Make a numeric choice
-  const choice = 5; // making 5 for now, will input through UI
-
-  // 3. Return the index based on choice
-  const addressMap = (function (number) {
+  const cellLocation = function (number) {
     let count = 0;
 
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         count++;
         if (count === number) {
-          return new Array([i, j]);
+          return [i, j];
         }
       }
     }
-  })(choice);
+  };
 
-  // 4. Update grid entry
-  (function (entry, playerTac, grid) {
+  const updateBoard = function (grid, tac, entry) {
     let i = entry[0];
     let j = entry[1];
+    grid[i][j] = tac;
+    return grid;
+  };
 
-    grid[i][j] = playerTac;
-  })(choice, tac, board);
+  return {
+    assignTurn,
+    cellLocation,
+    updateBoard,
+  };
 }
 
-const start = (function () {
-  const player1 = makePlayer("Shreyash", "X");
-  const player2 = makePlayer("Ishank", "O");
+function nextTurn(master, board, player1, player2, round) {
+  const currentPlayer = master.assignTurn(player1, player2, round);
+  const tac = currentPlayer.getTac();
+  const choice = currentPlayer.takeTurn(5);
 
-  const board = GameBoard();
+  const entry = master.cellLocation(choice);
+  console.log(checkValidity(entry, board));
+  board = master.updateBoard(board, tac, entry);
+}
 
-  const gamePlay = Controller(board, player1, player2);
-})();
+function checkValidity(entry, board) {
+  if (board[entry[0]][entry[1]] !== 0) {
+    console.log("Invalid Entry, choose another");
+    return false;
+  } else {
+    console.log("Valid Entry");
+    return true;
+  }
+}
+
