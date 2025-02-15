@@ -1,3 +1,17 @@
+const startGame = (function () {
+  /**
+   * Using IIFE to start the game. Next turns will have their own functions.
+   */
+  let board = GameBoard();
+  console.log(board);
+  const player1 = makePlayer("Shreyash", "X");
+  const player2 = makePlayer("Ishank", "O");
+  const master = Controller();
+
+  const round = 1;
+  nextTurn(master, board, player1, player2, round);
+})();
+
 function makePlayer(name, tac) {
   const getTac = () => tac;
 
@@ -5,9 +19,9 @@ function makePlayer(name, tac) {
 
   const isPlayerTurn = () => turn;
 
-  const takeTurn = function () {
+  const takeTurn = function (choice) {
     turn = true;
-    const cellChoice = 8;
+    const cellChoice = choice;
     return cellChoice;
   };
 
@@ -38,7 +52,6 @@ function Controller() {
    * It assigns turn to the correct player, find cell location based on the choice made by the player,
    * It updates the game board accordingly.
    */
-  // const setBoard = function () {};
 
   const assignTurn = (p1, p2, turn) => {
     return turn % 2 === 0 ? p2 : p1;
@@ -74,25 +87,20 @@ function Controller() {
 function nextTurn(master, board, player1, player2, round) {
   const currentPlayer = master.assignTurn(player1, player2, round);
   const tac = currentPlayer.getTac();
-  const choice = currentPlayer.takeTurn();
+  const choice = currentPlayer.takeTurn(5);
 
   const entry = master.cellLocation(choice);
+  console.log(checkValidity(entry, board));
   board = master.updateBoard(board, tac, entry);
 }
 
-const startGame = function () {
-  /**
-   * Using IIFE to start the game. Next turns will have their own functions.
-   */
-  let board = GameBoard();
-  console.log(board);
-  const player1 = makePlayer("Shreyash", "X");
-  const player2 = makePlayer("Ishank", "O");
-  const master = Controller();
-
-  const round = 1;
-  nextTurn(master, board, player1, player2, round);
-  // logging(board);
-};
-
+function checkValidity(entry, board) {
+  if (board[entry[0]][entry[1]] !== 0) {
+    console.log("Invalid Entry, choose another");
+    return false;
+  } else {
+    console.log("Valid Entry");
+    return true;
+  }
+}
 
