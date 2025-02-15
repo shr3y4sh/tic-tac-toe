@@ -1,4 +1,4 @@
-const startGame = (function () {
+const startGame = function () {
   /**
    * Using IIFE to start the game. Next turns will have their own functions.
    */
@@ -10,7 +10,7 @@ const startGame = (function () {
 
   const round = 1;
   nextTurn(master, board, player1, player2, round);
-})();
+};
 
 function makePlayer(name, tac) {
   const getTac = () => tac;
@@ -104,3 +104,24 @@ function checkValidity(entry, board) {
   }
 }
 
+const uiBegin = (function () {
+  const startButton = document.querySelector("#start");
+
+  startButton.addEventListener("click", function () {
+    startGame();
+    const cells = document.querySelectorAll(".tic");
+
+    cells.forEach(function (cell) {
+      cell.addEventListener("click", () => {
+        return inputTac(cell);
+      });
+    });
+  });
+})();
+
+function inputTac(cell) {
+  // console.log(cell.getAttribute("id")[0]);
+  const position = Number(cell.getAttribute("id")[0]);
+  console.log(position);
+  cell.innerHTML = position;
+}
