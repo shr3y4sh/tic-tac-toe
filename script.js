@@ -72,54 +72,53 @@ function Controller(player1, player2, round) {
   };
 
   const checkGameState = function (grid, tac) {
-    /** return false if game has to continue, true if winner is decided */
     for (let i = 0; i < 3; i++) {
-      let row = true;
-
+      let countElements = 0;
       for (let j = 0; j < 3; j++) {
-        if (grid[i][j] !== tac) {
-          row = false;
-          break;
+        if (grid[i][j] === tac) {
+          countElements++;
         }
       }
-
-      if (row) {
+      if (countElements === 3) {
         return true;
       }
     }
 
-    // Columns
-
     for (let i = 0; i < 3; i++) {
-      let col = true;
-
+      let countElements = 0;
       for (let j = 0; j < 3; j++) {
-        if (grid[j][i] !== tac) {
-          col = false;
-          break;
+        if (grid[j][i] === tac) {
+          countElements++;
         }
       }
-
-      if (col) {
+      if (countElements === 3) {
         return true;
       }
     }
 
-    let diagonal = checkDiagonals(grid, tac);
-
-    return diagonal;
-  };
-
-  const isDraw = function (grid) {
+    let count = 0;
     for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        if (grid[i][j] === 0) {
-          return false;
-        }
+      if (grid[i][i] === tac) {
+        count++;
       }
     }
+    if (count === 3) {
+      return true;
+    }
 
-    return true;
+    count = 0;
+    let j = 2;
+    for (let i = 0; i < 3; i++) {
+      if (grid[i][j] === tac) {
+        count++;
+      }
+      j--;
+    }
+    if (count === 3) {
+      return true;
+    }
+
+    return false;
   };
 
   const updateBoard = function (grid, tac, entry) {
@@ -140,6 +139,11 @@ function Controller(player1, player2, round) {
   };
 
   const getCell = (choice) => {
+    if (choice > 9) {
+      console.log("INvalid");
+      return;
+    }
+
     cell = cellLocation(choice);
     if (!checkValidity(cell, grid)) {
       console.log("wrong choice");
@@ -157,13 +161,13 @@ function Controller(player1, player2, round) {
       return player;
     }
 
-    if (isDraw(grid)) {
+    console.log(grid);
+    round++;
+    
+    if (round > 9) {
       console.log("Draw");
       return;
     }
-
-    console.log(grid);
-    round++;
   };
 
   return {
