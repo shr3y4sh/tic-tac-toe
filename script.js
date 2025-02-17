@@ -1,17 +1,3 @@
-const startGame = function () {
-  /**
-   * Using IIFE to start the game. Next turns will have their own functions.
-   */
-  let board = GameBoard();
-  console.log(board);
-  const player1 = makePlayer("Shreyash", "X");
-  const player2 = makePlayer("Ishank", "O");
-  const master = Controller();
-
-  const round = 1;
-  nextTurn(master, board, player1, player2, round);
-};
-
 function makePlayer(name, tac) {
   const getTac = () => tac;
 
@@ -177,7 +163,7 @@ function Controller(player1, player2, round) {
 
     console.log(grid);
     round++;
-    
+
     if (round > 9) {
       console.log("Draw");
       return;
@@ -199,26 +185,5 @@ const hero = (function () {
   const player2 = makePlayer("Ishank", "O");
   const master = Controller(player1, player2, round);
 
-const uiBegin = (function () {
-  const startButton = document.querySelector("#start");
-
-  startButton.addEventListener("click", function () {
-    startGame();
-    const cells = document.querySelectorAll(".tic");
-
-    cells.forEach(function (cell) {
-      cell.addEventListener("click", () => {
-        return inputTac(cell);
-      });
-    });
-  });
-})();
-
-function inputTac(cell) {
-  // console.log(cell.getAttribute("id")[0]);
-  const position = Number(cell.getAttribute("id")[0]);
-  console.log(position);
-  cell.innerHTML = position;
-}
   return master;
 })();
