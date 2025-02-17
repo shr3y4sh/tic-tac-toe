@@ -15,21 +15,9 @@ const startGame = function () {
 function makePlayer(name, tac) {
   const getTac = () => tac;
 
-  let turn = false;
-
-  const isPlayerTurn = () => turn;
-
-  const takeTurn = function (choice) {
-    turn = true;
-    const cellChoice = choice;
-    return cellChoice;
-  };
-
   return {
     name,
     getTac,
-    isPlayerTurn,
-    takeTurn,
   };
 }
 
@@ -46,15 +34,23 @@ function GameBoard() {
   return grid;
 }
 
-function Controller() {
+function Controller(player1, player2, round) {
   /**
    * This is the game master of the game, every action will be done by this object.
    * It assigns turn to the correct player, find cell location based on the choice made by the player,
    * It updates the game board accordingly.
    */
+  let grid = GameBoard();
 
-  const assignTurn = (p1, p2, turn) => {
-    return turn % 2 === 0 ? p2 : p1;
+  let player, tac, cell;
+  const assignPlayer = (X, p1, p2) => {
+    if (p1.getTac() === "X" && X) {
+      player = p1;
+    } else {
+      player = p2;
+    }
+
+    tac = player.getTac();
   };
 
   const cellLocation = function (number) {
@@ -70,6 +66,75 @@ function Controller() {
     }
   };
 
+  const checkDiagonals = function (grid, tac) {
+    let check = true;
+    let j = 2;
+    for (let i = 0; i < 3; i++) {
+      if (grid[i][i] !== tac) {
+        check = false;
+        break;
+      }
+    }
+    for (let i = 0; i < 3 && j >= 0; i++) {
+      if (grid[i][j] !== tac) {
+        check = false;
+      }
+      j--;
+    }
+
+    return check;
+  };
+
+  const checkGameState = function (grid, tac) {
+    for (let i = 0; i < 3; i++) {
+      let countElements = 0;
+      for (let j = 0; j < 3; j++) {
+        if (grid[i][j] === tac) {
+          countElements++;
+        }
+      }
+      if (countElements === 3) {
+        return true;
+      }
+    }
+
+    for (let i = 0; i < 3; i++) {
+      let countElements = 0;
+      for (let j = 0; j < 3; j++) {
+        if (grid[j][i] === tac) {
+          countElements++;
+        }
+      }
+      if (countElements === 3) {
+        return true;
+      }
+    }
+
+    let count = 0;
+    for (let i = 0; i < 3; i++) {
+      if (grid[i][i] === tac) {
+        count++;
+      }
+    }
+    if (count === 3) {
+      return true;
+    }
+
+    count = 0;
+    let j = 2;
+    for (let i = 0; i < 3; i++) {
+      if (grid[i][j] === tac) {
+        count++;
+      }
+      j--;
+    }
+    if (count === 3) {
+      return true;
+    }
+
+    return false;
+  };
+
   const updateBoard = function (grid, tac, entry) {
     let i = entry[0];
     let j = entry[1];
@@ -77,32 +142,62 @@ function Controller() {
     return grid;
   };
 
+  const checkValidity = function (entry, board) {
+    if (board[entry[0]][entry[1]] !== 0) {
+      console.log("Invalid Entry, choose another");
+      return false;
+    } else {
+      console.log("Valid Entry");
+      return true;
+    }
+  };
+
+  const getCell = (choice) => {
+    if (choice > 9) {
+      console.log("INvalid");
+      return;
+    }
+
+    cell = cellLocation(choice);
+    if (!checkValidity(cell, grid)) {
+      console.log("wrong choice");
+      return;
+    }
+
+    let turnX = round % 2 === 0 ? false : true;
+
+    assignPlayer(turnX, player1, player2);
+
+    updateBoard(grid, tac, cell);
+
+    if (checkGameState(grid, tac)) {
+      console.log("Winner");
+      return player;
+    }
+
+    console.log(grid);
+    round++;
+    
+    if (round > 9) {
+      console.log("Draw");
+      return;
+    }
+  };
+
   return {
-    assignTurn,
-    cellLocation,
-    updateBoard,
+    getCell,
   };
 }
 
-function nextTurn(master, board, player1, player2, round) {
-  const currentPlayer = master.assignTurn(player1, player2, round);
-  const tac = currentPlayer.getTac();
-  const choice = currentPlayer.takeTurn(5);
+const hero = (function () {
+  /**
+   * Using IIFE to start the game.
+   */
 
-  const entry = master.cellLocation(choice);
-  console.log(checkValidity(entry, board));
-  board = master.updateBoard(board, tac, entry);
-}
-
-function checkValidity(entry, board) {
-  if (board[entry[0]][entry[1]] !== 0) {
-    console.log("Invalid Entry, choose another");
-    return false;
-  } else {
-    console.log("Valid Entry");
-    return true;
-  }
-}
+  let round = 1;
+  const player1 = makePlayer("Shreyash", "X");
+  const player2 = makePlayer("Ishank", "O");
+  const master = Controller(player1, player2, round);
 
 const uiBegin = (function () {
   const startButton = document.querySelector("#start");
@@ -125,3 +220,5 @@ function inputTac(cell) {
   console.log(position);
   cell.innerHTML = position;
 }
+  return master;
+})();
