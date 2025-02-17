@@ -67,34 +67,64 @@ h6 {
   isolation: isolate;
 }
 
-/* * {
-    border: 1px solid grey;
-} */
+@font-face {
+  font-family: "Changa";
+  src: url("assets/fonts/fonts/Changa-Regular.woff2") format("woff2"),
+    url("assets/fonts/fonts/Changa-Regular.woff") format("woff"),
+    url("assets/fonts/fonts/Changa-Regular.ttf") format("truetype"),
+    url("assets/fonts/fonts/Changa-Regular.svg#Changa") format("svg");
+}
+
+/* Color Palette
+https://colorhunt.co/palette/04156211468fda1212eeeeee
+*/
+
+* {
+  border: 1px solid grey;
+  /* margin-top: 20px; */
+}
+
+body {
+  background-color: rgb(4, 21, 98);
+  color: rgb(238, 238, 238);
+  font-family: "Changa";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+h1 {
+  font-size: 3.5rem;
+  text-align: center;
+}
 
 #start {
-    height: 50px;
-    margin: 20px 0px;
+  width: 200px;
+  height: 50px;
+  border-color: aqua;
+  border-radius: 1rem;
+  font-size: 1.5rem;
 }
 
 .game-board {
-    display: grid;
-    margin: 2rem;
-    padding: 1rem;
-    border: 2px solid black;
-    max-width: 450px;
-    height: 200px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 5px;
+  display: grid;
+  width: 600px;
+  height: 600px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
+.row {
+  display: flex;
+  justify-content: center;
+  height: 33%;
+}
 
 .cell {
-    /* margin: auto; */
-    width:100%;
-    height: 40px;
-    /* text-align: center; */
-    /* padding: 0px 0px; */
+  width: 33%;
+  height: 100%;
+  text-align: center;
 }

@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Changa';
+    src: url('fonts/Changa-Regular.eot');
+    src: url('fonts/Changa-Regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Changa-Regular.woff2') format('woff2'),
+         url('fonts/Changa-Regular.woff') format('woff'),
+         url('fonts/Changa-Regular.ttf')  format('truetype'),
+         url('fonts/Changa-Regular.svg#Changa') format('svg');
+}
