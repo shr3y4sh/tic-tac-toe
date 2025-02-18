@@ -1,4 +1,4 @@
-import master, { makePlayer } from "./gameClass.js";
+import master, { makePlayer } from "/gameClass.js";
 
 function gameBoardDisplay() {
   const gameGridHtml = `<div class="cell" id="1grid"></div>
