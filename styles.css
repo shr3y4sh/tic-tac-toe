@@ -79,10 +79,9 @@ h6 {
 https://colorhunt.co/palette/04156211468fda1212eeeeee
 */
 
-* {
+/* * {
   border: 1px solid grey;
-  /* margin-top: 20px; */
-}
+} */
 
 body {
   background-color: rgb(4, 21, 98);
@@ -94,9 +93,17 @@ body {
   /* justify-content: center; */
 }
 
+h1, 
+#start,
+footer,
+p {
+  margin-top: 10px;
+  text-align: center;
+}
+
+
 h1 {
   font-size: 3.5rem;
-  text-align: center;
 }
 
 #start {
@@ -111,11 +118,15 @@ h1 {
   display: grid;
   width: 600px;
   height: 600px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: 1px solid orange;
+  border-radius: 10px;
+  background-color: orange;
+  margin-top: 30px;
 }
+
 
 .row {
   display: flex;
@@ -126,5 +137,22 @@ h1 {
 .cell {
   width: 33%;
   height: 100%;
-  text-align: center;
+  padding: 20px;
+  border: 3px solid orange;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+footer {
+  margin-top: 30px;
+}
+
+footer > p {
+  font-size: 1.5rem;
+}
+
+a {
+  color: white;
+  font-size: 10px;
+  padding: 5px;
 }
