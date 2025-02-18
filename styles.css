@@ -103,7 +103,7 @@ p {
 
 
 h1 {
-  font-size: 3.5rem;
+  font-size: 5rem;
 }
 
 #start {
@@ -116,8 +116,8 @@ h1 {
 
 .game-board {
   display: grid;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -144,15 +144,16 @@ h1 {
 }
 
 footer {
-  margin-top: 30px;
+  margin-top: 60px;
 }
 
 footer > p {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 a {
   color: white;
   font-size: 10px;
   padding: 5px;
+  font-size: 1rem;
 }
