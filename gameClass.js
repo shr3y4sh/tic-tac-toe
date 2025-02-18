@@ -7,11 +7,13 @@ export default class Controller {
 
     this.p1 = p1;
     this.p2 = p2;
+
+    this.player = this.changeTurn(round);
   }
 
   changeTurn(round) {
     this.turnX = round % 2 !== 0;
-    return this.p1.getTac() === "X" && X ? this.p1 : this.p2;
+    return this.p1.getTac() === "X" && this.turnX ? this.p1 : this.p2;
   }
 
 
@@ -30,12 +32,10 @@ export default class Controller {
   }
 
   checkGameState(grid, tac) {
-    this.checkRow(grid, tac);
-    this.checkCols(grid, tac);
-    this.checkDiagonals(grid, tac);
-  }
+    // this.checkRow(grid, tac);
+    // this.checkCols(grid, tac);
+    // this.checkDiagonals(grid, tac);
 
-  checkRow(grid, tac) {
     for (let i = 0; i < 3; i++) {
       let countElements = 0;
       for (let j = 0; j < 3; j++) {
@@ -47,9 +47,7 @@ export default class Controller {
         return true;
       }
     }
-  }
 
-  checkCols(grid, tac) {
     for (let i = 0; i < 3; i++) {
       let countElements = 0;
       for (let j = 0; j < 3; j++) {
@@ -61,9 +59,7 @@ export default class Controller {
         return true;
       }
     }
-  }
 
-  checkDiagonals(grid, tac) {
     let count = 0;
     for (let i = 0; i < 3; i++) {
       if (grid[i][i] === tac) {
@@ -112,7 +108,7 @@ export default class Controller {
       return;
     }
 
-    cell = this.cellLocation(choice);
+    const cell = this.cellLocation(choice);
 
     if (!this.checkValidEntry(cell, this.grid)) {
         return;
