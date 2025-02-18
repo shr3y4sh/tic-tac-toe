@@ -90,7 +90,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center;
 }
 
 h1, 
@@ -107,7 +107,7 @@ h1 {
   font-size: 5rem;
 }
 
-#start {
+.start {
   width: 200px;
   height: 50px;
   border-color: aqua;
@@ -171,4 +171,40 @@ footer > p {
 a {
   color: white;
   font-size: 1rem;
+}
+
+.winner {
+  position: fixed;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: ; */
+}
+
+.congrats {
+  font-size: 5.5rem;
+  color: orange;
+  font-weight: 800;
+  text-align: center;
+}
+
+.win-name,
+.you-won {
+  margin-top: 50px;
+  font-size: 4.5rem;
+}
+
+.party {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.emoji > img {
+  height: 80px;
+}
+
+.draw {
+  margin-top: 150px;
 }

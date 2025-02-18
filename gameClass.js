@@ -1,3 +1,5 @@
+import winner, {drawGame} from "/script.js"
+
 export default class Controller {
   turnX = true;
 
@@ -102,7 +104,7 @@ export default class Controller {
     }
   }
 
-  getCell(choice) {
+  getCell(choice, board) {
     if (choice > 9) {
       console.log("INvalid");
       return;
@@ -120,13 +122,15 @@ export default class Controller {
 
     if (this.checkGameState(this.grid, this.player.getTac())) {
         console.log("Winner: " + this.player.name)
-        return this.player;
+        winner(this.player, board);
+        return;
     }
 
     this.round++;
 
     if (this.round > 9) {
         console.log("Draw!");
+        drawGame(board);
         return;
     }
     
