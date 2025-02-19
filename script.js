@@ -1,4 +1,4 @@
-import master, { makePlayer } from "/gameClass.js";
+import master, { makePlayer } from "./gameClass.js";
 
 function gameBoardDisplay() {
   const gameGridHtml = `<div class="cell" id="1grid"></div>
@@ -35,8 +35,7 @@ function gameStart(hero, board) {
       const yellowAudio = new Audio("assets/sounds/yellow.mp3");
       const greenAudio = new Audio("assets/sounds/green.mp3")
       let number = Number(element.getAttribute("id")[0]);
-      hero.getCell(number, board);
-      console.log(hero.player.getTac());
+      const result = hero.getCell(number, board);
       let tac;
 
       if (hero.player.getTac() === "X") {
@@ -49,9 +48,24 @@ function gameStart(hero, board) {
         throw new Error("What the hell");
       }
 
-      // console.log(tac)
 
       element.innerHTML = tac;
+
+      if (result >= 0) {
+        let gameEnd;
+
+        if (result === 0) {
+          gameEnd = drawGame;
+        } else {
+          gameEnd = winGame;
+        }
+
+        setTimeout(() => {
+          gameEnd(hero.player, board);
+        }, 300);
+      }
+
+
     });
   });
 }
@@ -76,7 +90,7 @@ function gameStart(hero, board) {
   });
 })();
 
-export default function winGame(player, board) {
+function winGame(player, board) {
   const wonAudio = new Audio("assets/sounds/wrong.mp3")
   wonAudio.play()
   const winningDiv = `<p class="congrats">Congratulations</p>
@@ -103,14 +117,15 @@ export default function winGame(player, board) {
     .querySelector("body")
     .insertBefore(winDiv, document.querySelector("footer"));
   restart(winDiv);
+
 }
 
-export function drawGame(board) {
+function drawGame(player, board) {
   const blueAudio = new Audio("assets/sounds/blue.mp3");
   blueAudio.play()
   const drawPara = `<div class="congrats">Draw!!!</div>
     <p class="you-won">Nobody Won. Try again!</p>`;
-
+  console.log(player);
   const winDiv = document.createElement("div");
   winDiv.classList.add("winner", "draw");
   winDiv.innerHTML = drawPara;

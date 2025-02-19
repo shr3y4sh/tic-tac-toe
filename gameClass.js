@@ -1,4 +1,3 @@
-import winner, { drawGame } from "/script.js";
 
 export default class Controller {
   turnX = true;
@@ -32,9 +31,6 @@ export default class Controller {
   }
 
   checkGameState(grid, tac) {
-    // this.checkRow(grid, tac);
-    // this.checkCols(grid, tac);
-    // this.checkDiagonals(grid, tac);
 
     for (let i = 0; i < 3; i++) {
       let countElements = 0;
@@ -92,50 +88,33 @@ export default class Controller {
     return grid;
   }
 
-  checkValidEntry(entry, board) {
-    if (board[entry[0]][entry[1]] !== 0) {
-      console.log("Invalid Entry, choose another");
-      return false;
-    } else {
-      console.log("Valid Entry");
-      return true;
-    }
-  }
+
 
   getCell(choice, board) {
-    if (choice > 9) {
-      console.log("INvalid");
-      return;
-    }
 
     const cell = this.cellLocation(choice);
 
-    if (!this.checkValidEntry(cell, this.grid)) {
-      return;
-    }
 
     this.player = this.changeTurn(this.round);
 
     this.updateBoard(this.grid, this.player.getTac(), cell);
 
     if (this.checkGameState(this.grid, this.player.getTac())) {
-      console.log("Winner: " + this.player.name);
+      if (this.player.getTac() === "X") {
+        return 1;
+      } else {
+        return 2;
+      }
 
-      setTimeout(() => {
-        winner(this.player, board);
-      }, 800);
-      return;
     }
 
     this.round++;
 
     if (this.round > 9) {
-      console.log("Draw!");
-      setTimeout(() => {
-        drawGame(board);
-      }, 800);
-      return;
+      return 0;
     }
+
+    return -1;
   }
 }
 
