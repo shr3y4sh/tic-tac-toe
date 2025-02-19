@@ -1,4 +1,4 @@
-import winner, {drawGame} from "/script.js"
+import winner, { drawGame } from "/script.js";
 
 export default class Controller {
   turnX = true;
@@ -17,8 +17,6 @@ export default class Controller {
     this.turnX = round % 2 !== 0;
     return this.p1.getTac() === "X" && this.turnX ? this.p1 : this.p2;
   }
-
-
 
   cellLocation(number) {
     let count = 0;
@@ -113,27 +111,31 @@ export default class Controller {
     const cell = this.cellLocation(choice);
 
     if (!this.checkValidEntry(cell, this.grid)) {
-        return;
+      return;
     }
 
     this.player = this.changeTurn(this.round);
-    
-    this.updateBoard(this.grid, this.player.getTac(), cell)
+
+    this.updateBoard(this.grid, this.player.getTac(), cell);
 
     if (this.checkGameState(this.grid, this.player.getTac())) {
-        console.log("Winner: " + this.player.name)
+      console.log("Winner: " + this.player.name);
+
+      setTimeout(() => {
         winner(this.player, board);
-        return;
+      }, 800);
+      return;
     }
 
     this.round++;
 
     if (this.round > 9) {
-        console.log("Draw!");
+      console.log("Draw!");
+      setTimeout(() => {
         drawGame(board);
-        return;
+      }, 800);
+      return;
     }
-    
   }
 }
 

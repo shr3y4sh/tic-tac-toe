@@ -32,14 +32,18 @@ function gameStart(hero, board) {
 
   cells.forEach((element) => {
     element.addEventListener("click", function () {
+      const yellowAudio = new Audio("assets/sounds/yellow.mp3");
+      const greenAudio = new Audio("assets/sounds/green.mp3")
       let number = Number(element.getAttribute("id")[0]);
       hero.getCell(number, board);
       console.log(hero.player.getTac());
       let tac;
 
       if (hero.player.getTac() === "X") {
+        yellowAudio.play()
         tac = X_image;
       } else if (hero.player.getTac() === "O") {
+        greenAudio.play()
         tac = O_image;
       } else {
         throw new Error("What the hell");
@@ -59,14 +63,22 @@ function gameStart(hero, board) {
   const emptyDiv = document.querySelector(".empty");
   const startButton = document.querySelector(".start");
 
+  const redAudio = new Audio("assets/sounds/red.mp3");
+
   startButton.addEventListener("click", function () {
-    emptyDiv.remove();
-    const board = gameBoardDisplay();
-    gameStart(hero, board);
+    redAudio.play();
+    let board;
+    setTimeout(() => {
+      emptyDiv.remove();
+      board = gameBoardDisplay();
+      gameStart(hero, board);
+    }, 200);
   });
 })();
 
 export default function winGame(player, board) {
+  const wonAudio = new Audio("assets/sounds/wrong.mp3")
+  wonAudio.play()
   const winningDiv = `<p class="congrats">Congratulations</p>
       <div class="party">
         <span class="emoji"><img src="assets/images/party-popper.png" /></span>
@@ -94,6 +106,8 @@ export default function winGame(player, board) {
 }
 
 export function drawGame(board) {
+  const blueAudio = new Audio("assets/sounds/blue.mp3");
+  blueAudio.play()
   const drawPara = `<div class="congrats">Draw!!!</div>
     <p class="you-won">Nobody Won. Try again!</p>`;
 
@@ -107,12 +121,15 @@ export function drawGame(board) {
   restart(winDiv);
 }
 
-function restart (winDiv) {
+function restart(winDiv) {
   const restart = document.createElement("button");
-  restart.innerText = "Play Again?"
+  restart.innerText = "Play Again?";
   restart.classList.add("start");
   winDiv.appendChild(restart);
   restart.addEventListener("click", () => {
+    const redAudio = new Audio("assets/sounds/red.mp3");
+    redAudio.play()
+    setTimeout(() => {   
     location.reload();
-  })
+    }, 300);  });
 }
