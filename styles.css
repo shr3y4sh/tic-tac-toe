@@ -104,29 +104,29 @@ p,
 
 
 h1 {
-  font-size: 5rem;
+  font-size: 3rem;
 }
 
 .start {
-  width: 200px;
-  height: 50px;
+  width: 150px;
+  height: 60px;
   border-color: aqua;
   border-radius: 1rem;
   font-size: 1.5rem;
-  margin-top: 4rem;
+  margin-top: 20%;
 }
 
 .game-board {
   display: grid;
-  width: 550px;
-  height: 550px;
+  width: 300px;
+  height: 300px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   border: 5px solid orange;
   border-radius: 10px;
   /* background-color: orange; */
-  margin-top: 30px;
+  margin-top: 20%;
 }
 
 .empty {
@@ -140,42 +140,41 @@ h1 {
 
 .player {
   text-align: center;
-  width: 400px;
-  height: 5rem;
-  margin-top: 5rem;
-  font-size: 2.5rem;
-  padding-top: 8px;
+  width: 250px;
+  height: 3rem;
+  margin-top: 3rem;
+  font-size: 1.5rem;
+  padding-top: 4px;
   background-color: #DA1212;
-  border: #fff solid 3px;
+  border: #fff solid 1px;
   border-radius: 1rem;
 }
 
 
 .cell {
 
-  padding: 20px;
+  padding: 10px;
   border: 3px solid orange;
   background-color: #fff;
   /* border-radius: 5px; */
 }
 
 footer {
-  position: fixed;
-  top: 85vh;
+  margin-top: 20%;
 }
 
+
 footer > p {
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 a {
   color: white;
-  font-size: 1rem;
+  font-size: 10px;
 }
 
 .winner {
-  position: fixed;
-  top: 100px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -183,7 +182,7 @@ a {
 }
 
 .congrats {
-  font-size: 5.5rem;
+  font-size: 2.5rem;
   color: orange;
   font-weight: 800;
   text-align: center;
@@ -192,7 +191,7 @@ a {
 .win-name,
 .you-won {
   margin-top: 50px;
-  font-size: 4.5rem;
+  font-size: 2rem;
 }
 
 .party {
@@ -202,9 +201,64 @@ a {
 }
 
 .emoji > img {
-  height: 80px;
+  height: 40px;
 }
 
 .draw {
   margin-top: 150px;
+}
+
+
+@media (min-width: 500px) {
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  .start {
+    margin-top: 50px;
+  }
+
+  .player {
+    width: 300px;
+    height: auto;
+    padding: 0;
+    font-size: 3rem;
+  }
+
+  .game-board {
+    margin-top: 80px;
+    width: 450px;
+    height: 450px;
+  }
+
+
+  footer {
+    margin-top: 10px;
+    position: fixed;
+    top: 750px
+
+  }
+
+  footer > p {
+    font-size: 2rem;
+  }
+
+  a {
+    font-size: 1rem;
+  }
+
+  .congrats {
+    font-size: 5rem;
+    margin-top: 50px;
+  }
+
+  .win-name,
+  .you-won {
+    font-size: 3rem;
+  }
+
+  .emoji > img {
+    height: 80px;
+  }
 }
